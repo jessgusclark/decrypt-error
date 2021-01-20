@@ -1,70 +1,58 @@
-# Getting Started with Create React App
+# Demo for an error in Metamask
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Requesting `eth_decrypt` multiple times results in a Metamask error:
 
-## Available Scripts
+![Metamask Error](docs/metamask-error.jpg)
+```
+Message: Cannot read property 'from' of undefined
 
-In the project directory, you can run:
+Code: TypeError
 
-### `yarn start`
+Stack:
+TypeError: Cannot read property 'from' of undefined
+  at Function.mapToProps (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui.js:152:634958)
+  at n (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui-libs.js:99:20773)
+  at h (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui-libs.js:99:19379)
+  at chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui-libs.js:99:19586
+  at chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui-libs.js:99:12990
+  at Object.useMemo (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui-libs.js:81:64645)
+  at useMemo (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui-libs.js:148:5250)
+  at _ (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui-libs.js:99:12934)
+  at ca (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui-libs.js:81:59367)
+  at Ga (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui-libs.js:81:67589)
+  at Va (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui-libs.js:81:67408)
+  at El (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui-libs.js:81:107905)
+  at bu (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui-libs.js:81:90053)
+  at pu (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui-libs.js:81:89978)
+  at iu (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui-libs.js:81:87326)
+  at chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui-libs.js:81:45768
+  at r.unstable_runWithPriority (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui-libs.js:184:3472)
+  at Vo (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui-libs.js:81:45477)
+  at Yo (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui-libs.js:81:45713)
+  at Ko (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui-libs.js:81:45648)
+  at au (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui-libs.js:81:87618)
+  at Object.notify (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui-libs.js:99:24588)
+  at e.t.notifyNestedSubs (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui-libs.js:99:24155)
+  at e.t.handleChangeWrapper (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui-libs.js:99:24223)
+  at b (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui.js:137:63292)
+  at Object.dispatch (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui.js:137:57268)
+  at dispatch (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui.js:137:77709)
+  at clearConfirmTransaction (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui.js:152:635276)
+  at onClick (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/ui.js:152:632984)
+  ```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Steps to reproduce using the demo
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Happy Path
 
-### `yarn test`
+1. click `connect` to connect MetaMask to the App
+2. Under the Encrypt heading insert data into the input field and click the Encrypt Button. Provide the app the public encryption key. 
+3. Under the Decrypt heading, click `Decrypt All`. In Metamask, decrypt item
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Broken Part
+4. Add a second item in Encryptio following step 2.
+5. Click 'Decrypt All'. Decrypt first message, then error shows, if you close the error, then it requests to decrypt the second message.
 
-### `yarn build`
+## What should happen
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The error message should not appear.
